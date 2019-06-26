@@ -1,0 +1,274 @@
+ANTONIO GUSTAVO DA SILVA LEANDRO    |   ALGORITMO E LOGICA DE PROGRAMAÇÃO | PROJETO MANIPULAÇÃO DE MATRIZES
+
+#include <stdio.h>
+#include<stdlib.h>
+
+struct matriz{
+   int linhas;
+   int colunas;
+   float m[50][50];
+};
+
+struct matriz A, B, C;
+
+void tamanhoMatrizA(){
+   int linhas;
+   int colunas;
+
+   printf("\n    Quantidade de linhas: ");
+   scanf("%d", &linhas);
+   printf("    Quantidade de colunas: ");
+   scanf("%d", &colunas);
+
+   A.linhas = linhas;
+   A.colunas = colunas;
+
+   printf("\ntamanho da matriz A definido\n");
+}
+
+void tamanhoMatrizB(){
+   int linhas;
+   int colunas;
+
+   printf("\n    Quantidade de linhas: ");
+   scanf("%d", &linhas);
+   printf("    Quantidade de colunas: ");
+   scanf("%d", &colunas);
+
+   B.linhas = linhas;
+   B.colunas = colunas;
+
+   printf("\ntamanho da matriz B definido\n");
+}
+
+void valoresaleatoriosMatrizA(){
+   float valor;
+
+   for(int i=0; i<A.linhas; i++){
+       for(int j=0; j<A.colunas; j++){
+           valor = rand()%20 + 10;
+
+           A.m[i][j] = valor;
+       }
+   }
+   printf("\nMatriz A preenchida aleatoriamente\n");
+}
+
+void valoresaleatoriosMatrizB(){
+   float valor;
+
+   for(int i=0; i<B.linhas; i++){
+       for(int j=0; j<B.colunas; j++){
+           valor = rand()%20 + 10;
+           B.m[i][j] = valor;
+       }
+   }
+   printf("\nMatriz B preenchida aleatoriamente\n");
+}
+void valoresmanuaisMatrizA(){
+   float valor;
+
+   for(int i=0; i<A.linhas; i++){
+       for(int j=0; j<A.colunas; j++){
+           printf("    Valor[%d][%d]: ", i, j);
+           scanf("%f", &valor);
+           A.m[i][j] = valor;
+       }
+   }
+}
+
+void valoresmanuaisMatrizB(){
+   float valor;
+
+   if((B.linhas>0)&&(B.colunas>0)){
+       for(int i=0; i<B.linhas; i++){
+           for(int j=0; j<B.colunas; j++){
+               printf("    Valor[%d][%d]: ", i, j);
+               scanf("%f", &valor);
+               B.m[i][j] = valor;
+           }
+       }
+   }else{
+       printf("\nTamanho da matriz B nao definido\n");
+   }
+}
+
+void somaMatrizAB(){
+   if((A.linhas == B.linhas)&&(A.colunas == B.colunas)){
+       C.linhas = A.linhas;
+       C.colunas = A.colunas;
+       for(int i=0; i<A.linhas; i++){
+           for(int j=0; j<A.colunas; j++){
+               C.m[i][j] = A.m[i][j] + B.m[i][j];
+           }
+       }
+       printf("\nMatrizes A e B somadas\n");
+   }else{
+       printf("\nMatrizes de tamanho diferente\n");
+   }
+}
+
+void subtracaoMatrizAB(){
+   if((A.linhas == B.linhas)&&(A.colunas == B.colunas)){
+       C.linhas = A.linhas;
+       C.colunas = A.colunas;
+       for(int i=0; i<A.linhas; i++){
+           for(int j=0; j<A.colunas; j++){
+               C.m[i][j] = A.m[i][j] - B.m[i][j];
+           }
+       }
+       printf("\nMatrizes A e B subtraidas\n");
+   }else{
+       printf("\nMatrizes de tamanho diferente\n");
+   }
+}
+void multiplicacaoMatrizAB(){
+   float aux = 0;
+   C.linhas = A.linhas;
+   C.colunas = B.colunas;
+   if((A.m[0][0] != 0)||(B.m[0][0] != 0)){
+       for(int i=0; i<A.linhas; i++){
+           for(int j=0; j<B.colunas; j++){
+               C.m[i][j] = 0;
+               for(int x=0; x<B.linhas; x++){
+                   aux += A.m[i][x] * B.m[x][j];
+               }
+               C.m[i][j] = aux;
+               aux = 0;
+           }
+       }
+       printf("\nMatrizes A e B multiplicadas\n");
+   }else{
+       printf("\nMatrizes A e B nao podem ser multiplicadas\n");
+   }
+}
+
+void imprimeMatrizA(){
+   printf("\n  MATRIZ A\n\n");
+   for(int i=0; i<A.linhas; i++){
+       for(int j=0; j<A.colunas; j++){
+           printf("  %f  ", A.m[i][j]);
+       }printf("\n");
+   }
+}
+
+void imprimeMatrizB(){
+   printf("\n  MATRIZ B\n\n");
+   for(int i=0; i<B.linhas; i++){
+       for(int j=0; j<B.colunas; j++){
+           printf("  %f  ", B.m[i][j]);
+       }printf("\n");
+   }
+}
+
+void imprimeMatrizC(){
+   if((C.linhas>0)&&(C.colunas>0)&&(A.m[0][0] != 0)&&(B.m[0][0] != 0)){
+       printf("\n  MATRIZ C\n\n");
+       for(int i=0; i<C.linhas; i++){
+           for(int j=0; j<C.colunas; j++){
+               printf("  %f  ", C.m[i][j]);
+           }printf("\n");
+       }
+   }else{
+       printf("\nMatriz irregular\n");
+   }
+}
+void imprimeMenu(){
+   int operacao;
+   printf("\nPROGRAMA DE MANIPULACAO DE MATRIZES\n");
+   printf("(1) Definir o tamanho da matriz A\n");
+   printf("(2) Definir o tamanho da matriz B\n");
+   printf("(3) Preencher a matriz A com valores aleatorios\n");
+   printf("(4) Preencher a matriz B com valores aleatorios\n");
+   printf("(5) Atribuir valores manualmente para os elementos da matriz A\n");
+   printf("(6) Atribuir valores manualmente para os elementos da matriz B\n");
+   printf("(7) Calcular A+B\n");
+   printf("(8) Calcular A-B\n");
+   printf("(9) Calcular A*B\n");
+   printf("(10) Imprimir matriz A\n");
+   printf("(11) Imprimir matriz B\n");
+   printf("(12) Imprimir matriz C\n");
+   printf("(13) Ler a matriz A de um arquivo\n");
+   printf("(14) Ler a matriz B de um arquivo\n");
+   printf("(15) Escrever a matriz C em um arquivo\n");
+   printf("(16) Sair\n");
+   printf("Digite operacao: ");
+   scanf("%d", &operacao);
+
+   switch(operacao){
+   case 1:
+       tamanhoMatrizA();
+       break;
+   case 2:
+       tamanhoMatrizB();
+       break;
+   case 3:
+       valoresaleatoriosMatrizA();
+       break;
+   case 4:
+       valoresaleatoriosMatrizB();
+       break;
+   case 5:
+       valoresmanuaisMatrizA();
+       break;
+   case 6:
+       valoresmanuaisMatrizB();
+       break;
+   case 7:
+       somaMatrizAB();
+       break;
+   case 8:
+       subtracaoMatrizAB();
+       break;
+   case 9:
+       multiplicacaoMatrizAB();
+       break;
+   case 10:
+       imprimeMatrizA();
+       break;
+   case 11:
+       imprimeMatrizB();
+       break;
+   case 12:
+       imprimeMatrizC();
+       break;
+   case 16:
+       printf("\nFinalizado\n");
+       exit(0);
+       break;
+   default:
+       printf("\nOperacao invalida. Imprima um digito entre 1 e 16\n");
+       break;
+   }
+}
+
+#ifndef FUNCOES_H
+#define FUNCOES_H
+
+void imprimeMenu();
+void tamanhoMatrizA();
+void tamanhoMatrizB();
+void valoresaleatoriosMatrizA();
+void valoresaleatoriosMatrizB();
+void valoresmanuaisMatrizA();
+void valoresmanuaisMatrizB();
+void somaMatrizAB();
+void subtracaoMatrizAB();
+void multiplicacaoMatrizAB();
+void imprimeMatrizA();
+void imprimeMatrizB();
+void imprimeMatrizC();
+
+#endif
+
+#include <stdio.h>
+#include <time.h>
+
+
+int main(){
+   int loop = 0;
+
+   while(loop == 0){
+       imprimeMenu();
+   }
+}
